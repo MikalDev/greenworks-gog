@@ -7,7 +7,7 @@
 #include <sstream>
 #include <iomanip>
 #include "nan.h"
-#include "steam/steam_api.h"
+#include "steam/steam_api_flat.h"
 #include "v8.h"
 
 #include "greenworks_unzip.h"
@@ -162,13 +162,13 @@ ActivateAchievementWorker::ActivateAchievementWorker(
 }
 
 void ActivateAchievementWorker::Execute() {
-  ISteamUserStats* steam_user_stats = SteamUserStats();
+  // ISteamUserStats* steam_user_stats = SteamUserStats();
 
-  if (!steam_user_stats->SetAchievement(achievement_.c_str())) {
+  if (!SteamAPI_ISteamUserStats_SetAchievement(SteamUserStats(), achievement_.c_str())) {
     SetErrorMessage("Achievement name is not valid.");
     return;
   }
-  if (!steam_user_stats->StoreStats()) {
+  if (!SteamAPI_ISteamUserStats_StoreStats(SteamUserStats())) {
     SetErrorMessage("Error on storing user achievement");
     return;
   }

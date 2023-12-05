@@ -7,6 +7,7 @@
 
 #include "nan.h"
 #include "steam/steam_api.h"
+#include "steam/steam_api_flat.h"
 #include "v8.h"
 
 #include "greenworks_async_workers.h"
@@ -89,7 +90,7 @@ NAN_METHOD(IsSteamRunningOnSteamDeck) {
 
 NAN_METHOD(GetSteamId) {
   Nan::HandleScope scope;
-  CSteamID user_id = SteamUser()->GetSteamID();
+  CSteamID user_id = SteamAPI_ISteamUser_GetSteamID(SteamUser());
   v8::Local<v8::Object> flags = Nan::New<v8::Object>();
   Nan::Set(flags, Nan::New("anonymous").ToLocalChecked(),
            Nan::New(user_id.BAnonAccount()));

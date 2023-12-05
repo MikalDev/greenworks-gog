@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "nan.h"
-#include "steam/steam_api.h"
+#include "steam/steam_api_flat.h"
 #include "v8.h"
 
 #include "api/steam_api_registry.h"
@@ -27,15 +27,18 @@ NAN_METHOD(InitAPI) {
   Nan::HandleScope scope;
 
   bool success = SteamAPI_Init();
-
+  // Get steam id using flat api
+  // ISteamUser *MSteamUser = SteamUser();
   if (success) {
-    ISteamUserStats* steam_user_stats = SteamUserStats();
-    steam_user_stats->RequestCurrentStats();
+    // ISteamUserStats* steam_user_stats = SteamUserStats();
+    // steam_user_stats->RequestCurrentStats();
+    // ISteamUserStats *MSteamUserStats = SteamUserStats();
+    SteamAPI_ISteamUserStats_RequestCurrentStats(SteamUserStats());
   }
 
-  greenworks::SteamClient::GetInstance()->AddObserver(
-      new greenworks::SteamEvent(g_persistent_steam_events));
-  greenworks::SteamClient::StartSteamLoop();
+  
+  // greenworks::SteamClient::GetInstance()->AddObserver(new greenworks::SteamEvent(g_persistent_steam_events));
+  // greenworks::SteamClient::StartSteamLoop();
   info.GetReturnValue().Set(Nan::New(success));
 }
 

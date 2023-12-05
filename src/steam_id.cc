@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "greenworks_utils.h"
+#include "./steam/steam_api_flat.h"
 #include "steam_id.h"
 #include "v8.h"
 
@@ -138,8 +139,7 @@ NAN_METHOD(SteamID::GetStaticAccountKey) {
 NAN_METHOD(SteamID::GetPersonaName) {
   auto* obj = ObjectWrap::Unwrap<SteamID>(info.Holder());
   info.GetReturnValue().Set(
-      Nan::New(SteamFriends()->GetFriendPersonaName(obj->steam_id_))
-          .ToLocalChecked());
+      Nan::New(SteamAPI_ISteamFriends_GetFriendPersonaName(SteamFriends(),obj->steam_id_.ConvertToUint64())).ToLocalChecked());
 }
 
 NAN_METHOD(SteamID::GetNickname) {
