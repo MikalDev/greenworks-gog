@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "nan.h"
-#include "steam/steam_api.h"
+#include "steam/steam_api_flat.h"
 #include "steam/isteamapps.h"
 #include "v8.h"
 
@@ -49,7 +49,7 @@ NAN_METHOD(IsDLCInstalled) {
     THROW_BAD_ARGS("Bad arguments");
   }
   auto dlc_app_id = static_cast<AppId_t>(Nan::To<uint32>(info[0]).FromJust());
-  info.GetReturnValue().Set(SteamApps()->BIsDlcInstalled(dlc_app_id));
+  info.GetReturnValue().Set(SteamAPI_ISteamApps_BIsDlcInstalled(SteamApps(),dlc_app_id));
 }
 
 NAN_METHOD(InstallDLC) {

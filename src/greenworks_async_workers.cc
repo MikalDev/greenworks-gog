@@ -184,8 +184,8 @@ GetAchievementWorker::GetAchievementWorker(
 }
 
 void GetAchievementWorker::Execute() {
-  ISteamUserStats* steam_user_stats = SteamUserStats();
-  bool success = steam_user_stats->GetAchievement(achievement_.c_str(),
+  // ISteamUserStats* steam_user_stats = SteamUserStats();
+  bool success = SteamAPI_ISteamUserStats_GetAchievement(SteamUserStats(), achievement_.c_str(),
                                                   &is_achieved_);
   if (!success) {
     SetErrorMessage("Achivement name is not valid.");
@@ -209,13 +209,13 @@ ClearAchievementWorker::ClearAchievementWorker(
 }
 
 void ClearAchievementWorker::Execute() {
-  ISteamUserStats* steam_user_stats = SteamUserStats();
-  success_ = steam_user_stats->ClearAchievement(achievement_.c_str());
+  // ISteamUserStats* steam_user_stats = SteamUserStats();
+  success_ = SteamAPI_ISteamUserStats_ClearAchievement(SteamUserStats(),achievement_.c_str());
   if (!success_) {
     SetErrorMessage("Achievement name is not valid.");
     return;
   }
-  if (!steam_user_stats->StoreStats()) {
+  if (!SteamAPI_ISteamUserStats_StoreStats(SteamUserStats())) {
     SetErrorMessage("Fails on uploading user stats to server.");
     return;
   }
