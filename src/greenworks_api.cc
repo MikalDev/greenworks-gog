@@ -30,15 +30,13 @@ NAN_METHOD(InitAPI) {
   // Get steam id using flat api
   // ISteamUser *MSteamUser = SteamUser();
   if (success) {
-    // ISteamUserStats* steam_user_stats = SteamUserStats();
-    // steam_user_stats->RequestCurrentStats();
-    // ISteamUserStats *MSteamUserStats = SteamUserStats();
-    SteamAPI_ISteamUserStats_RequestCurrentStats(SteamUserStats());
+    ISteamUserStats* steam_user_stats = SteamUserStats();
+    steam_user_stats->RequestCurrentStats();
   }
 
   
-  // greenworks::SteamClient::GetInstance()->AddObserver(new greenworks::SteamEvent(g_persistent_steam_events));
-  // greenworks::SteamClient::StartSteamLoop();
+  greenworks::SteamClient::GetInstance()->AddObserver(new greenworks::SteamEvent(g_persistent_steam_events));
+  greenworks::SteamClient::StartSteamLoop();
   info.GetReturnValue().Set(Nan::New(success));
 }
 

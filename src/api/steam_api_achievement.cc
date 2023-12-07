@@ -6,7 +6,7 @@
 #include "v8.h"
 
 #include "greenworks_async_workers.h"
-#include "steam/steam_api.h"
+#include "steam/steam_api_flat.h"
 #include "steam_api_registry.h"
 
 namespace greenworks {

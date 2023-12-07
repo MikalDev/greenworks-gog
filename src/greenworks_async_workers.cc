@@ -162,13 +162,13 @@ ActivateAchievementWorker::ActivateAchievementWorker(
 }
 
 void ActivateAchievementWorker::Execute() {
-  // ISteamUserStats* steam_user_stats = SteamUserStats();
+ISteamUserStats* steam_user_stats = SteamUserStats();
 
-  if (!SteamAPI_ISteamUserStats_SetAchievement(SteamUserStats(), achievement_.c_str())) {
+if (!steam_user_stats->SetAchievement(achievement_.c_str())) {
     SetErrorMessage("Achievement name is not valid.");
     return;
   }
-  if (!SteamAPI_ISteamUserStats_StoreStats(SteamUserStats())) {
+if (!steam_user_stats->StoreStats()) {
     SetErrorMessage("Error on storing user achievement");
     return;
   }
@@ -188,6 +188,9 @@ void GetAchievementWorker::Execute() {
   bool success = SteamAPI_ISteamUserStats_GetAchievement(SteamUserStats(), achievement_.c_str(),
                                                   &is_achieved_);
   if (!success) {
+    // create error message string with the achievement
+    std::stringstream ss;
+    ss << "Error on getting achievement: " << achievement_;
     SetErrorMessage("Achivement name is not valid.");
   }
 }
