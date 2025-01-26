@@ -67,6 +67,7 @@
   'targets': [
     {
       'target_name': '<(project_name)',
+      'defines': ["NOMINMAX"],
       'sources': [
         'src/api/greenworks_api_utils.cc',
         'src/api/steam_api_achievement.cc',
@@ -126,7 +127,7 @@
         ['OS== "linux"',
           {
             'ldflags': [
-              '-Wl,-rpath,\$$ORIGIN',
+              '-Wl,-rpath,\\$$ORIGIN',
             ],
             'cflags': [
               # Disable compilation warnings on nw.js custom node_buffer.h
